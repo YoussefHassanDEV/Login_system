@@ -1,0 +1,21 @@
+.main{
+    background-color:#24353F;
+}
+.main .box{
+    background-color: #24353f;
+}
+.main .box h1{
+    color:rgb(23, 162, 184)
+}
+.main .box .form-control{
+    background-color: transparent;
+}
+.main .box .form-control::placeholder{
+    color: #A8B6B6;
+}
+.main .box{
+    color: white;
+}
+.main .box a{
+    color: white;
+}
