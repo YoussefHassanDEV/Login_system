@@ -6,7 +6,6 @@ let loginemail = document.querySelector("#loginEmail");
 let loginpassword = document.querySelector("#loginPassword");
 let login = document.querySelector("#Login");
 let userlist = [];
-let inerh1 = document.querySelector("#inername");
 let usernameIndex = -1; // Declare usernameIndex with an initial value
 if (localStorage.getItem("userlist") === null) {
     // if no data found in localstorage
@@ -90,9 +89,8 @@ function LOGIN() {
     usernameIndex = searchUsername();
     if (usernameIndex !== -1) {
         if (searchpassword(usernameIndex)) {
-            console.log("Logged in successfully");
+            localStorage.setItem('nameUser',userlist[usernameIndex].Name);
             window.location.href = "../pages/home.html", "_self";
-            console.log("Logged in successfully1");
 
 
         } else {
