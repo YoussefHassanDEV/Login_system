@@ -6,11 +6,40 @@ let loginemail = document.querySelector("#loginEmail");
 let loginpassword = document.querySelector("#loginPassword");
 let login = document.querySelector("#Login");
 let userlist = [];
+let inerh1 = document.querySelector("#inername");
 let usernameIndex = -1; // Declare usernameIndex with an initial value
+if (localStorage.getItem("userlist") === null) {
+    // if no data found in localstorage
+    userlist = [];
+} else {
+    // found data ,display data
+    userlist = JSON.parse(localStorage.getItem("userlist"));
+    //   console.log(userlist);
+    console.log(userlist);
+}
+signup?.addEventListener("click", createUser);
+login?.addEventListener("click", LOGIN);
+username?.addEventListener("keydown", function () {
+    let emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+    if (emailRegex.test(username.value)) {
+        username.classList.remove("is-invalid");
+        username.classList.add("is-valid");
+    } else {
+        username.classList.remove("is-valid");
+        username.classList.add("is-invalid");
+    }
 
-signup.addEventListener("click", createUser);
-login.addEventListener("click", LOGIN);
-
+})
+password?.addEventListener("keydown", function () {
+    let passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (passwordRegex.test(password.value)) {
+        password.classList.remove("is-invalid");
+        password.classList.add("is-valid");
+    } else {
+        password.classList.remove("is-valid");
+        password.classList.add("is-invalid");
+    }
+})
 function createUser() {
     if (!checkUsername()) {
         alert("Wrong email");
@@ -27,6 +56,7 @@ function createUser() {
     };
     userlist.push(user);
     console.log("User created:", user);
+    localStorage.setItem("userlist", JSON.stringify(userlist));
 }
 
 function checkUsername() {
@@ -54,22 +84,24 @@ function checkPassword() {
         return false;
     }
 }
+function LOGIN() {
 
-function LOGIN(event) {
-    event.preventDefault(); // Prevent form submission
-
-    usernameIndex = searchUsername(); // Update usernameIndex
-
+    console.log(userlist)
+    usernameIndex = searchUsername();
     if (usernameIndex !== -1) {
-        if (searchpassword()) {
-            window.open("E:\\Route\\Login_system\\Pages");
+        if (searchpassword(usernameIndex)) {
             console.log("Logged in successfully");
+            window.location.href = "../pages/home.html", "_self";
+            console.log("Logged in successfully1");
+
+
         } else {
             alert("Wrong email or password");
         }
     } else {
         alert("Wrong email or password");
     }
+
 }
 
 function searchUsername() {
@@ -81,7 +113,7 @@ function searchUsername() {
     return -1;
 }
 
-function searchpassword() {
+function searchpassword(usernameIndex) {
     if (userlist[usernameIndex].Password === loginpassword.value) {
         return true;
     }
